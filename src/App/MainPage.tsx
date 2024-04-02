@@ -1,8 +1,7 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './MainPage.css';
 
-function App() {
+const MainPage = () => {
   return (
     <div className="App">
       <h1>Hello World</h1>
@@ -10,4 +9,4 @@ function App() {
   );
 }
 
-export default App;
+export { MainPage };
