@@ -2,6 +2,14 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Como rodar
+
+É necessário instalar as dependências do projeto, para isso, execute o comando abaixo:
+### `npm install`
+
+Após a instalação das dependências, execute o comando abaixo para rodar o projeto:
+### `npm start`
+
 ## Available Scripts
 
 In the project directory, you can run:
