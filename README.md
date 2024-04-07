@@ -4,7 +4,9 @@ This project was bootstrapped with [Create React MainPage](https://github.com/fa
 
 ## Como rodar
 
-É necessário instalar as dependências do projeto, para isso, execute o comando abaixo:
+O primeiro passo, é clonar este repositório.
+
+Após isso, é necessário instalar as dependências do projeto, para isso, execute o comando abaixo:
 ### `npm install`
 
 Após a instalação das dependências, execute o comando abaixo para rodar o projeto:
