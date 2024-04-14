@@ -1,0 +1,20 @@
+.button {
+    background-color: #D97471;
+    border: 1px solid #D97471;
+    border-radius: 4px;
+    box-shadow: #fff 4px 4px 0 0,#D97471 4px 4px 0 1px;
+    font-family: Tahoma, sans-serif;
+    font-weight: bold;
+    font-size: 14px;
+    color: #fff;
+    cursor: pointer;
+    margin: 0 10px 10px 10px;
+    min-width: 200px;
+    height: 40px;
+    text-align: center;
+}
+
+.button:not([disabled]):active {
+  box-shadow: #fff 2px 2px 0 0, #d97471 2px 2px 0 1px;
+  transform: translate(2px, 2px);
+}
