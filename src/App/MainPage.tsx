@@ -1,15 +1,19 @@
-import React from 'react';
 import './MainPage.module.scss';
-import Card from "./Components/Card";
+import {useState} from "react";
+import GameNotStarted from "./Components/GameNotStarted";
 
 const MainPage = () => {
-  return (
-    <div className="App">
-      <h1>Hello World</h1>
-        <Card/>
-    </div>
+  const [isGameStarted, setIsGameStarted] = useState(false);
 
-  );
+  return (
+      <>
+        {!isGameStarted &&
+            <div>
+              <GameNotStarted/>
+            </div>
+        }
+      </>
+  )
 }
 
 export { MainPage };
