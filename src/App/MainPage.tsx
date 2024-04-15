@@ -1,15 +1,15 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './MainPage.module.scss';
-import Card from "./Components/Card";
+import MoneyInput from "./Components/MoneyInput";
 
 const MainPage = () => {
-  return (
-    <div className="App">
-      <h1>Hello World</h1>
-        <Card/>
-    </div>
+  const [value, setValue] = useState(0);
 
-  );
+  return (
+      <>
+        <MoneyInput value={value} />
+      </>
+  )
 }
 
 export { MainPage };
