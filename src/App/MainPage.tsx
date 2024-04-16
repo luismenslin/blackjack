@@ -1,13 +1,17 @@
-import React, {useState} from 'react';
 import './MainPage.module.scss';
-import MoneyInput from "./Components/MoneyInput";
+import { useState } from "react";
+import GameNotStarted from "./Components/GameNotStarted";
 
 const MainPage = () => {
-  const [value, setValue] = useState(0);
+  const [isGameStarted, setIsGameStarted] = useState(false);
 
   return (
       <>
-        <MoneyInput value={value} />
+        {!isGameStarted &&
+            <div>
+              <GameNotStarted/>
+            </div>
+        }
       </>
   )
 }
