@@ -1,11 +1,11 @@
 import React from 'react'
-import CurrencyInput from 'react-currency-input-field';
+import CurrencyInput, { CurrencyInputOnChangeValues } from 'react-currency-input-field';
 
 interface MoneyInputProps {
-    value: number
+    onValueChange: (value: string | undefined, name?: string | undefined, values?: CurrencyInputOnChangeValues | undefined) => void
 }
 
-const MoneyInput = ({ value }: MoneyInputProps) => {
+const MoneyInput = ({ onValueChange }: MoneyInputProps) => {
     return(
         <CurrencyInput
             id="input-example"
@@ -13,13 +13,13 @@ const MoneyInput = ({ value }: MoneyInputProps) => {
             allowDecimals={true}
             allowNegativeValue={false}
             placeholder="R$ 0,00"
-            defaultValue={10}
+            defaultValue={100}
             decimalsLimit={2}
             decimalSeparator=","
             groupSeparator="."
             prefix="R$ "
             step={10}
-            value={value}
+            onValueChange={onValueChange    }
         />
     )
 }
