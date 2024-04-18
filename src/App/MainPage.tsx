@@ -16,7 +16,12 @@ const MainPage = () => {
       </>
 * */
   return (
-      <Card/>
+      <div>
+        <Card number={9} color={"black"} suit={"clubs"}/>
+        <Card number={9} color={"red"} suit={"hearts"}/>
+        <Card number={9} color={"black"} suit={"spades"}/>
+        <Card number={9} color={"red"} suit={"diamond"}/>
+      </div>
   )
 }
 
