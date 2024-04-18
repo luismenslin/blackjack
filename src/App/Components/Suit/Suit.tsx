@@ -1,7 +1,7 @@
 import styles from "./Suit.module.scss"
 
 interface suitProps {
-    suit: string
+    suit: 'clubs' | 'hearts' | 'spades' | 'diamond'
 }
 
 const Suit = ({suit}: suitProps) => {
