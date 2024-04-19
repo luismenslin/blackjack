@@ -1,8 +1,12 @@
 import styles from "./GameNotStarted.module.scss"
-import React from "react";
+import React, {Dispatch, SetStateAction} from "react";
 import Button from "../Button";
 
-const GameNotStarted = () => {
+interface GameNotStartedProps {
+    setIsGameStarted: Dispatch<SetStateAction<boolean>>
+}
+
+const GameNotStarted = ({setIsGameStarted}: GameNotStartedProps) => {
     return (
         <div className={styles.container}>
             <img src="/hand-holding-card.webp" alt="Hand holding a card" className={styles.logo}/>
@@ -10,7 +14,7 @@ const GameNotStarted = () => {
             <p className={styles.text}>Faça uma aposta<br/> Você tem R$100</p>
             <br/>
             <br/>
-            <Button label={"Apostar e iniciar jogo!"} onClick={ () => console.log("Tem que mudar para o outro status")}/>
+            <Button label={"Apostar e iniciar jogo!"} onClick={() => setIsGameStarted(true)}/>
         </div>
     )
 }
