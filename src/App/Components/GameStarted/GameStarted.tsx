@@ -16,8 +16,8 @@ const GameStarted = () => {
                 <h3>Card</h3>
                 <h1 className={styles.title}>Sua mão</h1>
                 <h3>Card</h3>
-                <Button label={"Comprar carta"} onClick={() => true}/>
-                <Button label={"Permanecer"} onClick={() => true}/>
+                <Button label="Comprar carta" onClick={() => true}/>
+                <Button label="Permanecer" onClick={() => true}/>
             </div>
         </div>
     )
