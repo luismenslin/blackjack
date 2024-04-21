@@ -1,0 +1,40 @@
+.card {
+    background-color: #ffffff;
+    border: 1px solid black;
+    height: 170px;
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    border-radius: 0.5rem;
+
+    .numberTop {
+        font-family: "DM Serif Display", serif;
+        font-weight: bold;
+        font-size: 30px;
+        background-color: #ffffff;
+        position: absolute;
+        margin-top: 0;
+        top: 1px;
+        left: 8px;
+    }
+
+    .numberBottom {
+        font-family: "DM Serif Display", serif;
+        font-weight: bold;
+        font-size: 30px;
+        background-color: #ffffff;
+        position: absolute;
+        margin-top: 0;
+        bottom: 1px;
+        right: 8px;
+    }
+
+    .suit {
+        font-size: 80px;
+        background-color: #ffffff;
+    }
+}

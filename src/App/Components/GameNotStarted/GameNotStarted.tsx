@@ -1,9 +1,13 @@
 import styles from "./GameNotStarted.module.scss"
-import React, {useState} from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import Button from "../Button";
 import MoneyInput from "../MoneyInput";
 
-const GameNotStarted = () => {
+interface GameNotStartedProps {
+    setIsGameStarted: Dispatch<SetStateAction<boolean>>
+}
+
+const GameNotStarted = ({setIsGameStarted}: GameNotStartedProps) => {
     const [value, setValue] = useState('1000')
     const validateValue = (value: string | undefined): void => {
         if (value) setValue(value)
@@ -17,7 +21,7 @@ const GameNotStarted = () => {
             <br/>
             <br/>
             <MoneyInput onValueChange={validateValue} />
-            <Button label={"Apostar e iniciar jogo!"} onClick={ () => console.log("Tem que mudar para o outro status")}/>
+            <Button label={"Apostar e iniciar jogo!"} onClick={() => setIsGameStarted(true)}/>
         </div>
     )
 }
