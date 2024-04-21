@@ -22,6 +22,7 @@ const MoneyInput = ({ onValueChange }: MoneyInputProps) => {
             step={10}
             onValueChange={onValueChange}
             className={styles.input}
+            maxLength={10}
         />
     )
 }

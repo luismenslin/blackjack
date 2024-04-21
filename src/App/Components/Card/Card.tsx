@@ -3,7 +3,7 @@ import Suit from "../Suit";
 import React from "react";
 
 interface cardProps {
-    suit: string
+    suit: 'clubs' | 'hearts' | 'spades' | 'diamond'
     number: number
     color: string
 }
