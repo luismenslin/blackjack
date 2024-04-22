@@ -4,11 +4,18 @@ import CurrencyInput, { CurrencyInputOnChangeValues } from 'react-currency-input
 import styles from './MoneyInput.module.scss'
 
 interface MoneyInputProps {
-    onValueChange: (value: string | undefined, name?: string | undefined, values?: CurrencyInputOnChangeValues | undefined) => void
+    onValueChange: (value: number) => void
 }
 
 const MoneyInput = ({ onValueChange }: MoneyInputProps) => {
-    return(
+    const handleValueChange = (value: string | undefined, name?: string | undefined, values?: CurrencyInputOnChangeValues | undefined) => {
+        if (value) {
+            const numericValue = parseFloat(value.replace(/[^0-9.-]+/g,""));
+            onValueChange(numericValue);
+        }
+    }
+
+    return (
         <CurrencyInput
             id="input-example"
             name="input-name"
@@ -20,7 +27,7 @@ const MoneyInput = ({ onValueChange }: MoneyInputProps) => {
             groupSeparator="."
             prefix="R$ "
             step={10}
-            onValueChange={onValueChange}
+            onValueChange={handleValueChange}
             className={styles.input}
             maxLength={10}
         />

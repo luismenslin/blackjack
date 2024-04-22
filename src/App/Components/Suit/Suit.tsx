@@ -1,5 +1,3 @@
-import styles from "./Suit.module.scss"
-
 interface suitProps {
     suit: 'clubs' | 'hearts' | 'spades' | 'diamond'
 }
