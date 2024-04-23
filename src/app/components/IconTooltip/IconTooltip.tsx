@@ -1,13 +1,23 @@
-import styles from "../GameStarted/GameStarted.module.scss";
-import React from "react";
+import React, {useState} from "react"
+import styles from "./IconTooltip.module.scss"
 
 const IconTooltip = () => {
-return (
-    <div>
-        <i style={{color: "black"}} className="bi bi-question-square"></i>
-        <p className={styles.text}>Chegue o mais perto possível <br/> de 21 sem ultrapassar!</p>
-    </div>
-  )
+    const [activeTooltip, setActiveTooltip] = useState(false)
+
+    const handleTooltip = () => {
+        setActiveTooltip(!activeTooltip)
+    }
+
+    return (
+        <div className={styles.tooltipContainer}>
+            <i
+                style={{color: "black"}}
+                className="bi bi-question-square"
+                onClick={() => handleTooltip()}
+            />
+            {activeTooltip && <p className={styles.text}>Tente não <br/> ultrapassar 21</p>}
+        </div>
+      )
 }
 
 export default IconTooltip

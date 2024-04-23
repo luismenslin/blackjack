@@ -25,7 +25,7 @@ const GameStarted = ({ betValue }: GameStartedProps) => {
                 <h3>Card</h3>
                 <h1 className={styles.title}>Sua mão</h1>
                 <h3>Card</h3>
-                <div>
+                <div className={styles.actionContainer}>
                     <Button label="Comprar carta" onClick={() => true}/>
                     <Button label="Permanecer" onClick={() => true}/>
                     {isMobile && <IconTooltip />}
