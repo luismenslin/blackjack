@@ -1,5 +1,5 @@
 interface suitProps {
-    suit: 'clubs' | 'hearts' | 'spades' | 'diamond'
+    suit: string
 }
 
 const Suit = ({suit}: suitProps) => {
