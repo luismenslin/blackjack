@@ -1,3 +1,5 @@
+@import "../../../mixins.scss";
+
 .logo {
   max-height: 150px;
   max-width: 150px;
@@ -16,6 +18,10 @@
   font-style: normal;
   font-size: 15px;
   text-align: center;
+
+  @include respond(phone) {
+    margin: 0;
+  }
 }
 
 .fullpage {
@@ -23,6 +29,11 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
+
+  @include respond(phone) {
+    flex-direction: column;
+    justify-content: unset;
+  }
 }
 
 .container {
@@ -41,4 +52,8 @@
   align-items: center;
   width: 15%;
   padding: 20px;
+
+  @include respond(phone) {
+    width: unset;
+  }
 }
