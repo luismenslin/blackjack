@@ -2,9 +2,9 @@ import styles from  "./Card.module.scss"
 import Suit from "../Suit";
 import React from "react";
 
-interface cardProps {
-    suit: 'clubs' | 'hearts' | 'spades' | 'diamond'
-    number: number
+export interface cardProps {
+    suit: string
+    number: string
     color: string
 }
 

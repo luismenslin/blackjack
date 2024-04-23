@@ -1,0 +1,262 @@
+[
+  {
+    "suit": "hearts",
+    "number": "2",
+    "color": "red"
+  },
+  {
+    "suit": "hearts",
+    "number": "3",
+    "color": "red"
+  },
+  {
+    "suit": "hearts",
+    "number": "4",
+    "color": "red"
+  },
+  {
+    "suit": "hearts",
+    "number": "5",
+    "color": "red"
+  },
+  {
+    "suit": "hearts",
+    "number": "6",
+    "color": "red"
+  },
+  {
+    "suit": "hearts",
+    "number": "7",
+    "color": "red"
+  },
+  {
+    "suit": "hearts",
+    "number": "8",
+    "color": "red"
+  },
+  {
+    "suit": "hearts",
+    "number": "9",
+    "color": "red"
+  },
+  {
+    "suit": "hearts",
+    "number": "10",
+    "color": "red"
+  },
+  {
+    "suit": "hearts",
+    "number": "J",
+    "color": "red"
+  },
+  {
+    "suit": "hearts",
+    "number": "Q",
+    "color": "red"
+  },
+  {
+    "suit": "hearts",
+    "number": "K",
+    "color": "red"
+  },
+  {
+    "suit": "hearts",
+    "number": "A",
+    "color": "red"
+  },
+  {
+    "suit": "diamonds",
+    "number": "2",
+    "color": "red"
+  },
+  {
+    "suit": "diamonds",
+    "number": "3",
+    "color": "red"
+  },
+  {
+    "suit": "diamonds",
+    "number": "4",
+    "color": "red"
+  },
+  {
+    "suit": "diamonds",
+    "number": "5",
+    "color": "red"
+  },
+  {
+    "suit": "diamonds",
+    "number": "6",
+    "color": "red"
+  },
+  {
+    "suit": "diamonds",
+    "number": "7",
+    "color": "red"
+  },
+  {
+    "suit": "diamonds",
+    "number": "8",
+    "color": "red"
+  },
+  {
+    "suit": "diamonds",
+    "number": "9",
+    "color": "red"
+  },
+  {
+    "suit": "diamonds",
+    "number": "10",
+    "color": "red"
+  },
+  {
+    "suit": "diamonds",
+    "number": "J",
+    "color": "red"
+  },
+  {
+    "suit": "diamonds",
+    "number": "Q",
+    "color": "red"
+  },
+  {
+    "suit": "diamonds",
+    "number": "K",
+    "color": "red"
+  },
+  {
+    "suit": "diamonds",
+    "number": "A",
+    "color": "red"
+  },
+  {
+    "suit": "clubs",
+    "number": "2",
+    "color": "black"
+  },
+  {
+    "suit": "clubs",
+    "number": "3",
+    "color": "black"
+  },
+  {
+    "suit": "clubs",
+    "number": "4",
+    "color": "black"
+  },
+  {
+    "suit": "clubs",
+    "number": "5",
+    "color": "black"
+  },
+  {
+    "suit": "clubs",
+    "number": "6",
+    "color": "black"
+  },
+  {
+    "suit": "clubs",
+    "number": "7",
+    "color": "black"
+  },
+  {
+    "suit": "clubs",
+    "number": "8",
+    "color": "black"
+  },
+  {
+    "suit": "clubs",
+    "number": "9",
+    "color": "black"
+  },
+  {
+    "suit": "clubs",
+    "number": "10",
+    "color": "black"
+  },
+  {
+    "suit": "clubs",
+    "number": "J",
+    "color": "black"
+  },
+  {
+    "suit": "clubs",
+    "number": "Q",
+    "color": "black"
+  },
+  {
+    "suit": "clubs",
+    "number": "K",
+    "color": "black"
+  },
+  {
+    "suit": "clubs",
+    "number": "A",
+    "color": "black"
+  },
+  {
+    "suit": "spades",
+    "number": "2",
+    "color": "black"
+  },
+  {
+    "suit": "spades",
+    "number": "3",
+    "color": "black"
+  },
+  {
+    "suit": "spades",
+    "number": "4",
+    "color": "black"
+  },
+  {
+    "suit": "spades",
+    "number": "5",
+    "color": "black"
+  },
+  {
+    "suit": "spades",
+    "number": "6",
+    "color": "black"
+  },
+  {
+    "suit": "spades",
+    "number": "7",
+    "color": "black"
+  },
+  {
+    "suit": "spades",
+    "number": "8",
+    "color": "black"
+  },
+  {
+    "suit": "spades",
+    "number": "9",
+    "color": "black"
+  },
+  {
+    "suit": "spades",
+    "number": "10",
+    "color": "black"
+  },
+  {
+    "suit": "spades",
+    "number": "J",
+    "color": "black"
+  },
+  {
+    "suit": "spades",
+    "number": "Q",
+    "color": "black"
+  },
+  {
+    "suit": "spades",
+    "number": "K",
+    "color": "black"
+  },
+  {
+    "suit": "spades",
+    "number": "A",
+    "color": "black"
+  }
+]

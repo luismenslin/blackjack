@@ -1,7 +1,7 @@
 import styles from "./Suit.module.scss"
 
 interface suitProps {
-    suit: 'clubs' | 'hearts' | 'spades' | 'diamond'
+    suit: string
 }
 
 const Suit = ({suit}: suitProps) => {
@@ -22,7 +22,7 @@ const Suit = ({suit}: suitProps) => {
                     <i style={{color: "black"}} className="bi bi-suit-spade-fill"></i>
                 </div>
             )}
-            {suit === "diamond" && (
+            {suit === "diamonds" && (
                 <div className="suit">
                     <i style={{color: "red"}} className="bi bi-suit-diamond-fill"></i>
                 </div>
