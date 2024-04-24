@@ -1,45 +1,72 @@
-import styles from "./GameStarted.module.scss";
+import styles from "./GameActionsContainer.module.scss"
 import Card from "../Card";
 import Button from "../Button";
 import {useEffect, useState} from "react";
 import deck from "../../deck.json"
+import {cardProps} from "../Card/Card";
 
 const GameActionsContainer = () => {
 
     const [deckList, setDeckList] = useState(deck)
-    const [playerHand, setPlayerHand] = useState([])
-    const [dealerHand, setDealerHand] = useState([])
+    const [dealerHand, setDealerHand] = useState<cardProps[]>([]);
+    const [playerHand, setPlayerHand] = useState<cardProps[]>([]);
 
-    console.log(deckList)
-
-    const getRandomCardAndUpdateDeckList = () => {
-        //gerando index aleatorio
+    const getRandomCardAndUpdateDeckList = (deckList: cardProps[]): { randomCard: cardProps, updatedList: cardProps[] } => {
         const randomIndex = Math.floor(Math.random() * deckList.length);
-        // pega o item daquele index
         const randomCard = deckList[randomIndex];
-        //... = spread operator
-        //remove e adiciona o restante dos elementos da lista em uma nova lista updatedList
-        const updatedList = [...deckList.slice(0, randomIndex), ...deckList.slice(randomIndex + 1)];
-        setDeckList(updatedList)
-
-        return randomCard
+        const updatedList = [
+            ...deckList.slice(0, randomIndex),
+            ...deckList.slice(randomIndex + 1)
+        ];
+        return { randomCard, updatedList };
     }
 
     useEffect(() => {
-        for (let i: number = 0; i<2; i++) {
-            setDealerHand([getRandomCardAndUpdateDeckList(), getRandomCardAndUpdateDeckList()])
+        let updatedList = deckList;
+        for (let i = 0; i < 2; i++) {
+            const { randomCard, updatedList: newList } = getRandomCardAndUpdateDeckList(updatedList);
+            updatedList = newList;
+            setDealerHand(prevHand => [...prevHand, randomCard]);
         }
-        const randomCard = getRandomCardAndUpdateDeckList()
 
+        for (let i: number = 0; i < 2; i++) {
+            const { randomCard, updatedList: newList } = getRandomCardAndUpdateDeckList(updatedList);
+            updatedList = newList;
+            setPlayerHand(prevHand => [...prevHand, randomCard]);
+        }
+
+        setDeckList(() => updatedList);
 
     }, []);
 
     return (
         <div className={styles.container}>
             <h1 className={styles.title}>Mão do Dealer</h1>
-            <Card color={"red"} number="9" suit={"hearts"}/>
+
+            <div className={styles.handDeck}>
+                {dealerHand.map((cardData, index) => (
+                    <Card
+                        key={index} // Ensure each card has a unique key
+                        suit={cardData.suit}
+                        number={cardData.number}
+                        color={cardData.color}
+                    />
+                ))}
+            </div>
+
             <h1 className={styles.title}>Sua mão</h1>
-            <Card color={"red"} number="9" suit={"hearts"}/>
+
+            <div className={styles.handDeck}>
+                {playerHand.map((cardData, index) => (
+                    <Card
+                        key={index} // Ensure each card has a unique key
+                        suit={cardData.suit}
+                        number={cardData.number}
+                        color={cardData.color}
+                    />
+                ))}
+            </div>
+
             <Button label="Comprar carta" onClick={() => true}/>
             <Button label="Permanecer" onClick={() => true}/>
         </div>
