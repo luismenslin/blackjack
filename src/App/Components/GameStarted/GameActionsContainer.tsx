@@ -27,6 +27,7 @@ const GameActionsContainer = () => {
             const { randomCard, updatedList: newList } = getRandomCardAndUpdateDeckList(updatedList);
             updatedList = newList;
 
+            //Não está renderizando CSS
             // if (i === 0) {
             //     randomCard.isDown = true;
             // }
@@ -50,9 +51,31 @@ const GameActionsContainer = () => {
         setDeckList(() => updatedList);
     }
 
+    const convertCardNumberToValue = (number: string): number => {
+        if (['J', 'Q', 'K'].includes(number)) {
+            return 10;
+        }
+        else if (number === 'A') {
+            return 11;
+        }
+        else {
+            return parseInt(number);
+        }
+    };
+
+    const calculateHandSum = (hand: cardProps[]): number => {
+        let sum = 0;
+        for (const card of hand) {
+            sum += convertCardNumberToValue(card.number);
+        }
+        return sum;
+    };
+
     return (
         <div className={styles.container}>
-            <h1 className={styles.title}>Mão do Dealer</h1>
+            <div>
+                <h1 className={styles.title}>Mão do Dealer ({calculateHandSum(dealerHand)})</h1>
+            </div>
 
             <div className={styles.handDeck}>
                 {dealerHand.map((cardData, index) => (
@@ -65,7 +88,9 @@ const GameActionsContainer = () => {
                 ))}
             </div>
 
-            <h1 className={styles.title}>Sua mão</h1>
+            <div>
+                <h1 className={styles.title}>Sua mão ({calculateHandSum(playerHand)})</h1>
+            </div>
 
             <div className={styles.handDeck}>
                 {playerHand.map((cardData, index) => (
@@ -77,7 +102,6 @@ const GameActionsContainer = () => {
                     />
                 ))}
             </div>
-
             <Button label="Comprar carta" onClick={handleBuyCardClick}/>
             <Button label="Permanecer" onClick={() => true}/>
         </div>
