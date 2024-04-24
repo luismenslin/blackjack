@@ -22,9 +22,9 @@ const GameStarted = ({ betValue }: GameStartedProps) => {
             </div>
             <div className={styles.container}>
                 <h1 className={styles.title}>Mão do Dealer</h1>
-                <h3>Card</h3>
+                <h3 className={styles.description}>Card</h3>
                 <h1 className={styles.title}>Sua mão</h1>
-                <h3>Card</h3>
+                <h3 className={styles.description}>Card</h3>
                 <div className={styles.actionContainer}>
                     <Button label="Comprar carta" onClick={() => true}/>
                     <Button label="Permanecer" onClick={() => true}/>

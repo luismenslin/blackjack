@@ -5,11 +5,21 @@
   max-width: 150px;
 }
 
-.title{
+.title {
   font-family: "DM Serif Display", serif;
   font-weight: 400;
   font-style: normal;
   font-size: 30px;
+
+  @include respond(phone) {
+    font-size: 24px;
+  }
+}
+
+.description {
+  @include respond(phone) {
+    font-size: 14px;
+  }
 }
 
 .text {
