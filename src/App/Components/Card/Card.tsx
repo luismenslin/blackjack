@@ -6,10 +6,10 @@ export interface cardProps {
     suit: string
     number: string
     color: string
-    isDown: boolean
+    isDown?: boolean
 }
 
-const Card = ({suit, number, color, isDown} : cardProps) => {
+const Card = ({suit, number, color, isDown=false} : cardProps) => {
     return (
        <>
            {isDown &&
