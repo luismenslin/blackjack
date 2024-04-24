@@ -26,6 +26,11 @@ const GameActionsContainer = () => {
         for (let i = 0; i < 2; i++) {
             const { randomCard, updatedList: newList } = getRandomCardAndUpdateDeckList(updatedList);
             updatedList = newList;
+
+            // if (i === 0) {
+            //     randomCard.isDown = true;
+            // }
+
             setDealerHand(prevHand => [...prevHand, randomCard]);
         }
 
@@ -39,6 +44,12 @@ const GameActionsContainer = () => {
 
     }, []);
 
+    const handleBuyCardClick = () => {
+        const { randomCard, updatedList } = getRandomCardAndUpdateDeckList(deckList);
+        setPlayerHand(prevHand => [...prevHand, randomCard]);
+        setDeckList(() => updatedList);
+    }
+
     return (
         <div className={styles.container}>
             <h1 className={styles.title}>Mão do Dealer</h1>
@@ -46,7 +57,7 @@ const GameActionsContainer = () => {
             <div className={styles.handDeck}>
                 {dealerHand.map((cardData, index) => (
                     <Card
-                        key={index} // Ensure each card has a unique key
+                        key={index}
                         suit={cardData.suit}
                         number={cardData.number}
                         color={cardData.color}
@@ -59,7 +70,7 @@ const GameActionsContainer = () => {
             <div className={styles.handDeck}>
                 {playerHand.map((cardData, index) => (
                     <Card
-                        key={index} // Ensure each card has a unique key
+                        key={index}
                         suit={cardData.suit}
                         number={cardData.number}
                         color={cardData.color}
@@ -67,7 +78,7 @@ const GameActionsContainer = () => {
                 ))}
             </div>
 
-            <Button label="Comprar carta" onClick={() => true}/>
+            <Button label="Comprar carta" onClick={handleBuyCardClick}/>
             <Button label="Permanecer" onClick={() => true}/>
         </div>
     )
