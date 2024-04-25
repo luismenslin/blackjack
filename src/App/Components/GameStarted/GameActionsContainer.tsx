@@ -27,10 +27,9 @@ const GameActionsContainer = () => {
             const { randomCard, updatedList: newList } = getRandomCardAndUpdateDeckList(updatedList);
             updatedList = newList;
 
-            //Não está renderizando CSS
-            // if (i === 0) {
-            //     randomCard.isDown = true;
-            // }
+            if (i === 0) {
+                randomCard.isDown = true;
+            }
 
             setDealerHand(prevHand => [...prevHand, randomCard]);
         }
@@ -84,6 +83,7 @@ const GameActionsContainer = () => {
                         suit={cardData.suit}
                         number={cardData.number}
                         color={cardData.color}
+                        isDown={cardData.isDown}
                     />
                 ))}
             </div>
