@@ -1,12 +1,14 @@
 import styles from "./GameActionsContainer.module.scss"
 import Card from "../Card";
 import Button from "../Button";
-import {useEffect, useState} from "react";
-import deck from "../../deck.json"
+import {useContext, useEffect, useState} from "react";
+import deck from "../deck.json"
 import {cardProps} from "../Card/Card";
+import IconTooltip from "../IconTooltip";
+import {AppContext} from "../../context/AppContext";
 
 const GameActionsContainer = () => {
-
+    const { isMobile } = useContext(AppContext)
     const [deckList, setDeckList] = useState(deck)
     const [dealerHand, setDealerHand] = useState<cardProps[]>([]);
     const [playerHand, setPlayerHand] = useState<cardProps[]>([]);
@@ -104,6 +106,7 @@ const GameActionsContainer = () => {
             </div>
             <Button label="Comprar carta" onClick={handleBuyCardClick}/>
             <Button label="Permanecer" onClick={() => true}/>
+            {isMobile && <IconTooltip />}
         </div>
     )
 }
