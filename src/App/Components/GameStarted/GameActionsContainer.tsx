@@ -26,6 +26,12 @@ const GameActionsContainer = () => {
         for (let i = 0; i < 2; i++) {
             const { randomCard, updatedList: newList } = getRandomCardAndUpdateDeckList(updatedList);
             updatedList = newList;
+
+            //Não está renderizando CSS
+            // if (i === 0) {
+            //     randomCard.isDown = true;
+            // }
+
             setDealerHand(prevHand => [...prevHand, randomCard]);
         }
 
@@ -39,14 +45,42 @@ const GameActionsContainer = () => {
 
     }, []);
 
+    const handleBuyCardClick = () => {
+        const { randomCard, updatedList } = getRandomCardAndUpdateDeckList(deckList);
+        setPlayerHand(prevHand => [...prevHand, randomCard]);
+        setDeckList(() => updatedList);
+    }
+
+    const convertCardNumberToValue = (number: string): number => {
+        if (['J', 'Q', 'K'].includes(number)) {
+            return 10;
+        }
+        else if (number === 'A') {
+            return 11;
+        }
+        else {
+            return parseInt(number);
+        }
+    };
+
+    const calculateHandSum = (hand: cardProps[]): number => {
+        let sum = 0;
+        for (const card of hand) {
+            sum += convertCardNumberToValue(card.number);
+        }
+        return sum;
+    };
+
     return (
         <div className={styles.container}>
-            <h1 className={styles.title}>Mão do Dealer</h1>
+            <div>
+                <h1 className={styles.title}>Mão do Dealer ({calculateHandSum(dealerHand)})</h1>
+            </div>
 
             <div className={styles.handDeck}>
                 {dealerHand.map((cardData, index) => (
                     <Card
-                        key={index} // Ensure each card has a unique key
+                        key={index}
                         suit={cardData.suit}
                         number={cardData.number}
                         color={cardData.color}
@@ -54,20 +88,21 @@ const GameActionsContainer = () => {
                 ))}
             </div>
 
-            <h1 className={styles.title}>Sua mão</h1>
+            <div>
+                <h1 className={styles.title}>Sua mão ({calculateHandSum(playerHand)})</h1>
+            </div>
 
             <div className={styles.handDeck}>
                 {playerHand.map((cardData, index) => (
                     <Card
-                        key={index} // Ensure each card has a unique key
+                        key={index}
                         suit={cardData.suit}
                         number={cardData.number}
                         color={cardData.color}
                     />
                 ))}
             </div>
-
-            <Button label="Comprar carta" onClick={() => true}/>
+            <Button label="Comprar carta" onClick={handleBuyCardClick}/>
             <Button label="Permanecer" onClick={() => true}/>
         </div>
     )

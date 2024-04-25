@@ -15,12 +15,12 @@ const Card = ({suit, number, color, isDown=false} : cardProps) => {
            {isDown &&
                <div className={styles.card}>
                     <div className={styles.cardDown}>
-                        <div className={styles.cardBackground}>
-
+                        <div className={styles.cardDown}>
                         </div>
                     </div>
                </div>
            }
+
            {!isDown &&
                <div className={styles.card}>
                    <div className={styles.numberTop}>
