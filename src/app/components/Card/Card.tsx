@@ -2,25 +2,25 @@ import styles from  "./Card.module.scss"
 import Suit from "../Suit";
 import React from "react";
 
-interface cardProps {
-    suit: 'clubs' | 'hearts' | 'spades' | 'diamond'
-    number: number
+export interface cardProps {
+    suit: string
+    number: string
     color: string
-    isDown: boolean
+    isDown?: boolean
 }
 
-const Card = ({suit, number, color, isDown} : cardProps) => {
+const Card = ({suit, number, color, isDown=false} : cardProps) => {
     return (
        <>
            {isDown &&
                <div className={styles.card}>
                     <div className={styles.cardDown}>
-                        <div className={styles.cardBackground}>
-
+                        <div className={styles.cardDown}>
                         </div>
                     </div>
                </div>
            }
+
            {!isDown &&
                <div className={styles.card}>
                    <div className={styles.numberTop}>
