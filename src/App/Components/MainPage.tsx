@@ -26,7 +26,7 @@ const MainPage = () => {
       <AppContext.Provider value={{ isMobile }}>
         {!isGameStarted &&
             <div>
-              <GameNotStarted setIsGameStarted={setIsGameStarted} valueOwn={valueOwn} setBetValue={setBetValue} />
+              <GameNotStarted setIsGameStarted={setIsGameStarted} valueOwn={valueOwn} betValue={betValue} setBetValue={setBetValue} />
             </div>
         }
         {isGameStarted &&
