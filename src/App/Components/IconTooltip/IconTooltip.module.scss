@@ -1,0 +1,25 @@
+@import "../../../mixins.scss";
+
+.tooltipContainer {
+  position: relative;
+
+  .text {
+    font-family: "Athiti", sans-serif;
+    font-style: normal;
+    background-color: white;
+    font-size: 12px;
+    position: absolute;
+    bottom: 25px;
+    text-align: center;
+    padding: 15px;
+    left: 9px;
+    font-weight: 500;
+    width: max-content;
+    border-radius: 50% 50% 50% 0;
+    box-shadow: #cc3f3f 4px 4px 0 0, #cc3f3f 4px 4px 0 1px;
+
+    @include respond(phone) {
+      margin: 0;
+    }
+  }
+}

@@ -1,14 +1,26 @@
+@import "../../../mixins.scss";
+
 .logo {
   max-height: 150px;
   max-width: 150px;
 }
 
-.title{
+.title {
   font-family: "DM Serif Display", serif;
   font-weight: 400;
   font-style: normal;
   font-size: 30px;
   margin: 0;
+
+  @include respond(phone) {
+    font-size: 24px;
+  }
+}
+
+.description {
+  @include respond(phone) {
+    font-size: 14px;
+  }
 }
 
 .text {
@@ -17,6 +29,10 @@
   font-style: normal;
   font-size: 15px;
   text-align: center;
+
+  @include respond(phone) {
+    margin: 0;
+  }
 }
 
 .fullpage {
@@ -24,6 +40,25 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
+
+  @include respond(phone) {
+    flex-direction: column;
+    justify-content: unset;
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 85%;
+
+  .actionContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 .sideContainer {
@@ -33,4 +68,9 @@
   align-items: center;
   width: 15%;
   padding: 20px;
+
+  @include respond(phone) {
+    width: unset;
+    padding: 12px;
+  }
 }

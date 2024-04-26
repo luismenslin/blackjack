@@ -1,12 +1,14 @@
 import styles from "./GameActionsContainer.module.scss"
 import Card from "../Card";
 import Button from "../Button";
-import {useEffect, useState} from "react";
-import deck from "../../deck.json"
+import {useContext, useEffect, useState} from "react";
+import deck from "../deck.json"
 import {cardProps} from "../Card/Card";
+import IconTooltip from "../IconTooltip";
+import {AppContext} from "../../context/AppContext";
 
 const GameActionsContainer = () => {
-
+    const { isMobile } = useContext(AppContext)
     const [deckList, setDeckList] = useState(deck)
     const [dealerHand, setDealerHand] = useState<cardProps[]>([]);
     const [playerHand, setPlayerHand] = useState<cardProps[]>([]);
@@ -27,10 +29,9 @@ const GameActionsContainer = () => {
             const { randomCard, updatedList: newList } = getRandomCardAndUpdateDeckList(updatedList);
             updatedList = newList;
 
-            //Não está renderizando CSS
-            // if (i === 0) {
-            //     randomCard.isDown = true;
-            // }
+            if (i === 0) {
+                randomCard.isDown = true;
+            }
 
             setDealerHand(prevHand => [...prevHand, randomCard]);
         }
@@ -71,10 +72,21 @@ const GameActionsContainer = () => {
         return sum;
     };
 
+    const calculateDealerHandSum = (hand: cardProps[], considerIsDown: boolean = false): number => {
+        let sum = 0;
+        for (const card of hand) {
+            if (!card.isDown) {
+                sum += convertCardNumberToValue(card.number);
+            }
+        }
+        return sum;
+    };
+
+
     return (
         <div className={styles.container}>
             <div>
-                <h1 className={styles.title}>Mão do Dealer ({calculateHandSum(dealerHand)})</h1>
+                <h1 className={styles.title}>Mão do Dealer ({calculateDealerHandSum(dealerHand)})</h1>
             </div>
 
             <div className={styles.handDeck}>
@@ -84,6 +96,7 @@ const GameActionsContainer = () => {
                         suit={cardData.suit}
                         number={cardData.number}
                         color={cardData.color}
+                        isDown={cardData.isDown}
                     />
                 ))}
             </div>
@@ -104,6 +117,7 @@ const GameActionsContainer = () => {
             </div>
             <Button label="Comprar carta" onClick={handleBuyCardClick}/>
             <Button label="Permanecer" onClick={() => true}/>
+            {isMobile && <IconTooltip />}
         </div>
     )
 }
