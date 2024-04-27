@@ -9,9 +9,11 @@ import {AppContext} from "../../context/AppContext";
 
 interface GameActionsContainerProps {
     setIsGameStarted: (isGameStarted: boolean) => void
+    setValueOwn: (valueOwn: (prevValue: number) => number) => void
+    betValue: number
 }
 
-const GameActionsContainer = ({setIsGameStarted} : GameActionsContainerProps) => {
+const GameActionsContainer = ({setIsGameStarted, setValueOwn, betValue} : GameActionsContainerProps) => {
     const { isMobile } = useContext(AppContext)
     const [deckList, setDeckList] = useState(deck)
     const [dealerHand, setDealerHand] = useState<cardProps[]>([]);
@@ -19,6 +21,8 @@ const GameActionsContainer = ({setIsGameStarted} : GameActionsContainerProps) =>
     const [sumPlayerHand, setSumPlayerHand] = useState(0);
     const [sumDealerHand, setSumDealerHand] = useState(0);
     const [isGameLost, setIsGameLost] = useState(false)
+    const [isGameWon, setIsGameWon] = useState(false)
+    const [isGameDraw, setIsGameDraw] = useState(false)
 
     const getRandomCardAndUpdateDeckList = (deckList: cardProps[]): { randomCard: cardProps, updatedList: cardProps[] } => {
         const randomIndex = Math.floor(Math.random() * deckList.length);
@@ -60,6 +64,7 @@ const GameActionsContainer = ({setIsGameStarted} : GameActionsContainerProps) =>
     useEffect(() => {
         if (sumPlayerHand > 21) {
             setIsGameLost(true)
+            setValueOwn((prevValue: number) => prevValue - betValue);
         }
     }, [sumPlayerHand]);
 
@@ -99,6 +104,24 @@ const GameActionsContainer = ({setIsGameStarted} : GameActionsContainerProps) =>
         return sum;
     };
 
+    const handleStandOption = () => {
+        if (sumPlayerHand < sumDealerHand) {
+            setIsGameLost(true);
+            setValueOwn((prevValue: number) => prevValue - betValue);
+            return
+        }
+
+        if (sumPlayerHand > sumDealerHand) {
+            setIsGameWon(true);
+            setValueOwn((prevValue: number) => prevValue + betValue);
+            return
+        }
+
+        setIsGameDraw(true);
+    }
+
+    const getResultText = isGameWon ? "Você ganhou essa rodada!" : isGameLost ? "Você perdeu essa rodada!" : "Você empatou essa rodada!";
+
     return (
         <div className={styles.container}>
             <div>
@@ -132,15 +155,15 @@ const GameActionsContainer = ({setIsGameStarted} : GameActionsContainerProps) =>
                 ))}
             </div>
 
-            {!isGameLost &&
+            {!(isGameLost || isGameWon || isGameDraw) &&
                 <>
                     <Button label="Comprar carta" onClick={handleBuyCardClick}/>
-                    <Button label="Permanecer" onClick={() => true}/>
+                    <Button label="Permanecer" onClick={handleStandOption}/>
                 </>
             }
-            {isGameLost &&
+            {(isGameLost || isGameWon || isGameDraw) &&
                 <>
-                    <h2 className={styles.resultText}>Você perdeu essa rodada!</h2>
+                    <h2 className={styles.resultText}>{getResultText}</h2>
                     <Button label={"Voltar as apostas"} onClick={() => setIsGameStarted(false)}/>
                 </>
             }
@@ -148,4 +171,5 @@ const GameActionsContainer = ({setIsGameStarted} : GameActionsContainerProps) =>
         </div>
     )
 }
+
 export default GameActionsContainer

@@ -22,6 +22,10 @@ const MainPage = () => {
     }
   }, [])
 
+  useEffect(() => {
+    if (!isGameStarted) setBetValue(0)
+  }, [isGameStarted]);
+
   return (
       <AppContext.Provider value={{ isMobile }}>
         {!isGameStarted &&
@@ -31,7 +35,7 @@ const MainPage = () => {
         }
         {isGameStarted &&
             <div>
-                <GameStarted betValue={betValue} setIsGameStarted={setIsGameStarted} />
+                <GameStarted betValue={betValue} setIsGameStarted={setIsGameStarted} setValueOwn={setValueOwn} />
             </div>
         }
       </AppContext.Provider>

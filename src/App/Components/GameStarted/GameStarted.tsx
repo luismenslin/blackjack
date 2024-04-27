@@ -7,9 +7,10 @@ import styles from "./GameStarted.module.scss"
 interface GameStartedProps {
     betValue: number
     setIsGameStarted: (isGameStarted: boolean) => void
+    setValueOwn: (valueOwn: (prevValue: number) => number) => void
 }
 
-const GameStarted = ({ betValue, setIsGameStarted }: GameStartedProps) => {
+const GameStarted = ({ betValue, setIsGameStarted, setValueOwn }: GameStartedProps) => {
     const { isMobile } = useContext(AppContext)
 
     return (
@@ -20,7 +21,7 @@ const GameStarted = ({ betValue, setIsGameStarted }: GameStartedProps) => {
                 {!isMobile && < p className={styles.text}>Chegue o mais perto possível <br/> de 21 sem ultrapassar!</p>}
                 <p className={styles.text}>Você tem {formatCurrency(betValue, true)} apostados nessa rodada</p>
             </div>
-            <GameActionsContainer setIsGameStarted={setIsGameStarted} />
+            <GameActionsContainer setIsGameStarted={setIsGameStarted} betValue={betValue} setValueOwn={setValueOwn} />
         </div>
     )
 }
