@@ -15,7 +15,6 @@ const GameActionsContainer = () => {
     const [sumPlayerHand, setSumPlayerHand] = useState(0);
     const [sumDealerHand, setSumDealerHand] = useState(0);
 
-
     const getRandomCardAndUpdateDeckList = (deckList: cardProps[]): { randomCard: cardProps, updatedList: cardProps[] } => {
         const randomIndex = Math.floor(Math.random() * deckList.length);
         const randomCard = deckList[randomIndex];
@@ -46,8 +45,12 @@ const GameActionsContainer = () => {
         }
 
         setDeckList(() => updatedList);
-
     }, []);
+
+    useEffect(() => {
+        setSumPlayerHand(calculateHandSum(playerHand));
+        setSumDealerHand(calculateDealerHandSum(dealerHand));
+    }, [playerHand, dealerHand]);
 
     const handleBuyCardClick = () => {
         const { randomCard, updatedList } = getRandomCardAndUpdateDeckList(deckList);
@@ -84,17 +87,6 @@ const GameActionsContainer = () => {
         }
         return sum;
     };
-
-    const handleHandSum = (hand: cardProps[], isDealer: boolean) => {
-        let sum = 0
-        if (isDealer) {
-            sum = calculateDealerHandSum(hand)
-            setSumDealerHand(sum)
-        }
-
-        sum = calculateHandSum(hand)
-        setSumPlayerHand(sum)
-    }
 
     return (
         <div className={styles.container}>
