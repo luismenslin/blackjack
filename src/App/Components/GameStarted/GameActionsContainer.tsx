@@ -148,5 +148,4 @@ const GameActionsContainer = ({setIsGameStarted} : GameActionsContainerProps) =>
         </div>
     )
 }
-//passar por propriedade o set de isgamestarted
 export default GameActionsContainer
