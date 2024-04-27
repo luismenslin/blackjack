@@ -7,13 +7,18 @@ import {cardProps} from "../Card/Card";
 import IconTooltip from "../IconTooltip";
 import {AppContext} from "../../context/AppContext";
 
-const GameActionsContainer = () => {
+interface GameActionsContainerProps {
+    setIsGameStarted: (isGameStarted: boolean) => void
+}
+
+const GameActionsContainer = ({setIsGameStarted} : GameActionsContainerProps) => {
     const { isMobile } = useContext(AppContext)
     const [deckList, setDeckList] = useState(deck)
     const [dealerHand, setDealerHand] = useState<cardProps[]>([]);
     const [playerHand, setPlayerHand] = useState<cardProps[]>([]);
     const [sumPlayerHand, setSumPlayerHand] = useState(0);
     const [sumDealerHand, setSumDealerHand] = useState(0);
+    const [isGameLost, setIsGameLost] = useState(false)
 
     const getRandomCardAndUpdateDeckList = (deckList: cardProps[]): { randomCard: cardProps, updatedList: cardProps[] } => {
         const randomIndex = Math.floor(Math.random() * deckList.length);
@@ -51,6 +56,12 @@ const GameActionsContainer = () => {
         setSumPlayerHand(calculateHandSum(playerHand));
         setSumDealerHand(calculateDealerHandSum(dealerHand));
     }, [playerHand, dealerHand]);
+
+    useEffect(() => {
+        if (sumPlayerHand > 21) {
+            setIsGameLost(true)
+        }
+    }, [sumPlayerHand]);
 
     const handleBuyCardClick = () => {
         const { randomCard, updatedList } = getRandomCardAndUpdateDeckList(deckList);
@@ -120,11 +131,21 @@ const GameActionsContainer = () => {
                     />
                 ))}
             </div>
-            <Button label="Comprar carta" onClick={handleBuyCardClick}/>
-            <Button label="Permanecer" onClick={() => true}/>
+
+            {!isGameLost &&
+                <>
+                    <Button label="Comprar carta" onClick={handleBuyCardClick}/>
+                    <Button label="Permanecer" onClick={() => true}/>
+                </>
+            }
+            {isGameLost &&
+                <>
+                    <h2 className={styles.resultText}>Você perdeu essa rodada!</h2>
+                    <Button label={"Voltar as apostas"} onClick={() => setIsGameStarted(false)}/>
+                </>
+            }
             {isMobile && <IconTooltip />}
         </div>
     )
 }
-
 export default GameActionsContainer

@@ -31,7 +31,7 @@ const MainPage = () => {
         }
         {isGameStarted &&
             <div>
-                <GameStarted betValue={betValue} />
+                <GameStarted betValue={betValue} setIsGameStarted={setIsGameStarted} />
             </div>
         }
       </AppContext.Provider>
