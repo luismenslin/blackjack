@@ -68,9 +68,22 @@ const GameActionsContainer = ({setIsGameStarted, setValueOwn, betValue} : GameAc
         }
     }, [sumPlayerHand]);
 
+    useEffect(() => {
+        if (sumDealerHand > 21) {
+            setIsGameLost(true)
+            setValueOwn((prevValue: number) => prevValue - betValue);
+        }
+    }, [sumDealerHand]);
+
     const handleBuyCardClick = () => {
         const { randomCard, updatedList } = getRandomCardAndUpdateDeckList(deckList);
         setPlayerHand(prevHand => [...prevHand, randomCard]);
+        setDeckList(() => updatedList);
+    }
+
+    const buyDealerCard = () => {
+        const { randomCard, updatedList } = getRandomCardAndUpdateDeckList(deckList);
+        setDealerHand(prevHand => [...prevHand, randomCard]);
         setDeckList(() => updatedList);
     }
 
@@ -105,13 +118,79 @@ const GameActionsContainer = ({setIsGameStarted, setValueOwn, betValue} : GameAc
     };
 
     const handleStandOption = () => {
-        if (sumPlayerHand < sumDealerHand) {
+        var willDealerHit = true;
+        while (willDealerHit) {
+        let dealersHand = sumDealerHand;
+        let chance = Math.floor(Math.random() * 101)
+        let percDealerHit = 0;
+
+        console.log(`dealershand: ${dealersHand}`)
+        console.log(`willDealerHit: ${willDealerHit}`)
+        console.log(`chance: ${chance}`)
+        console.log(`percDealerHit: ${percDealerHit}`)
+
+        switch (dealersHand) {
+            case 12:
+                percDealerHit = 90;
+            break
+            case 13:
+                percDealerHit = 70;
+            break
+            case 14:
+                percDealerHit = 50;
+            break
+            case 15:
+                percDealerHit = 40;
+            break
+            case 16:
+                percDealerHit = 30;
+            break
+            case 17:
+                percDealerHit = 15;
+            break
+            case 18:
+                percDealerHit = 10;
+            break
+            case 19:
+                percDealerHit = 5;
+            break
+            case 20:
+                percDealerHit = 2;
+            break
+            case 21:
+                percDealerHit = 0;
+            break
+            default:
+                if (dealersHand <= 11) {
+                    percDealerHit = 100;
+                }
+                if (dealersHand > 21) {
+                    percDealerHit = 0;
+                }
+        }
+
+        console.log(`dealershand: ${dealersHand}`)
+        console.log(`chance: ${chance}`)
+        console.log(`percDealerHit: ${percDealerHit}`)
+
+        if (chance <= percDealerHit) {
+            buyDealerCard();
+            willDealerHit = false;
+        } else {
+            willDealerHit = false;
+        }
+
+        //Preciso de vocês pra me ajudar e revisar esse tream aqui
+        
+    }
+
+        if (sumPlayerHand < sumDealerHand && sumDealerHand <= 21) {
             setIsGameLost(true);
             setValueOwn((prevValue: number) => prevValue - betValue);
             return
         }
 
-        if (sumPlayerHand > sumDealerHand) {
+        if (sumPlayerHand > sumDealerHand && sumPlayerHand <= 21) {
             setIsGameWon(true);
             setValueOwn((prevValue: number) => prevValue + betValue);
             return
