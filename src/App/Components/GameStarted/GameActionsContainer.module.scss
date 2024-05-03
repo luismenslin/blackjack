@@ -34,8 +34,8 @@
   font-weight: 650;
   font-style: normal;
   font-size: 23px;
-  color: red;
   margin: 10px;
+  color: red;
 
   @include respond(phone) {
     font-size: 20px;
