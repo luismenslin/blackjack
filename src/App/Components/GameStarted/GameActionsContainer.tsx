@@ -72,7 +72,7 @@ const GameActionsContainer = ({setIsGameStarted, setValueOwn, betValue} : GameAc
 
     useEffect(() => {
         if (sumDealerHand > 21) {
-            setIsGameLost(true)
+            setIsGameWon(true)
             setValueOwn((prevValue: number) => prevValue - betValue);
         }
     }, [sumDealerHand]);
@@ -85,8 +85,10 @@ const GameActionsContainer = ({setIsGameStarted, setValueOwn, betValue} : GameAc
 
     const buyDealerCard = () => {
         const { randomCard, updatedList } = getRandomCardAndUpdateDeckList(deckList);
-        setDealerHand(prevHand => [...prevHand, randomCard]);
+        const newDealerHand = [...dealerHand, randomCard];
+        setDealerHand(newDealerHand);
         setDeckList(() => updatedList);
+        return newDealerHand;
     }
 
     const convertCardNumberToValue = (number: string): number => {
@@ -119,86 +121,83 @@ const GameActionsContainer = ({setIsGameStarted, setValueOwn, betValue} : GameAc
         return sum;
     };
 
-    const handleStandOption = () => {
-        var willDealerHit = true;
+    const handleDealerCardsBuy = (sumFullDealerHand: number) => {
+        let willDealerHit = true;
         while (willDealerHit) {
-        let dealersHand = sumDealerHand;
-        let chance = Math.floor(Math.random() * 101)
-        let percDealerHit = 0;
+            const chance = Math.floor(Math.random() * 101)
+            let percDealerHit = 0;
 
-        console.log(`dealershand: ${dealersHand}`)
-        console.log(`willDealerHit: ${willDealerHit}`)
-        console.log(`chance: ${chance}`)
-        console.log(`percDealerHit: ${percDealerHit}`)
-
-        switch (dealersHand) {
-            case 12:
-                percDealerHit = 90;
-            break
-            case 13:
-                percDealerHit = 70;
-            break
-            case 14:
-                percDealerHit = 50;
-            break
-            case 15:
-                percDealerHit = 40;
-            break
-            case 16:
-                percDealerHit = 30;
-            break
-            case 17:
-                percDealerHit = 15;
-            break
-            case 18:
-                percDealerHit = 10;
-            break
-            case 19:
-                percDealerHit = 5;
-            break
-            case 20:
-                percDealerHit = 2;
-            break
-            case 21:
-                percDealerHit = 0;
-            break
-            default:
-                if (dealersHand <= 11) {
-                    percDealerHit = 100;
-                }
-                if (dealersHand > 21) {
+            switch (sumFullDealerHand) {
+                case 12:
+                    percDealerHit = 90;
+                    break
+                case 13:
+                    percDealerHit = 70;
+                    break
+                case 14:
+                    percDealerHit = 50;
+                    break
+                case 15:
+                    percDealerHit = 40;
+                    break
+                case 16:
+                    percDealerHit = 30;
+                    break
+                case 17:
+                    percDealerHit = 15;
+                    break
+                case 18:
+                    percDealerHit = 10;
+                    break
+                case 19:
+                    percDealerHit = 5;
+                    break
+                case 20:
+                    percDealerHit = 2;
+                    break
+                case 21:
                     percDealerHit = 0;
-                }
+                    break
+                default:
+                    if (sumFullDealerHand <= 11) {
+                        percDealerHit = 100;
+                    }
+                    if (sumFullDealerHand > 21) {
+                        percDealerHit = 0;
+                    }
+            }
+
+            if (chance <= percDealerHit) {
+                const newDealerHand = buyDealerCard();
+                sumFullDealerHand = calculateDealerHandSum(newDealerHand);
+            } else {
+                willDealerHit = false;
+            }
         }
 
-        console.log(`dealershand: ${dealersHand}`)
-        console.log(`chance: ${chance}`)
-        console.log(`percDealerHit: ${percDealerHit}`)
-
-        if (chance <= percDealerHit) {
-            buyDealerCard();
-            willDealerHit = false;
-        } else {
-            willDealerHit = false;
-        }
-
-        //Preciso de vocês pra me ajudar e revisar esse tream aqui
-        
+        return sumFullDealerHand
     }
 
-        if (sumPlayerHand < sumDealerHand && sumDealerHand <= 21) {
+    const handleStandOption = () => {
+        const fullDealerHand = dealerHand.map(card => ({ ...card, isDown: false }));
+        let sumFullDealerHand = calculateDealerHandSum(fullDealerHand);
+        sumFullDealerHand = handleDealerCardsBuy(sumFullDealerHand);
+
+        if (sumPlayerHand < sumFullDealerHand && sumFullDealerHand <= 21) {
             setIsGameLost(true);
             setValueOwn((prevValue: number) => prevValue - betValue);
             return
         }
 
-        if (sumPlayerHand > sumDealerHand && sumPlayerHand <= 21) {
+        if (sumPlayerHand > sumFullDealerHand && sumPlayerHand <= 21) {
             setIsGameWon(true);
             setValueOwn((prevValue: number) => prevValue + betValue);
             return
         }
 
+        setSumDealerHand(sumFullDealerHand)
         setIsGameDraw(true);
+        setDealerHand(fullDealerHand);
     }
 
     const handleResetGame = () => {
