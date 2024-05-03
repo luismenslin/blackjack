@@ -38,11 +38,12 @@ const GameActionsContainer = ({setIsGameStarted, setValueOwn, betValue} : GameAc
         let updatedList = deckList;
         for (let i = 0; i < 2; i++) {
             const { randomCard, updatedList: newList } = getRandomCardAndUpdateDeckList(updatedList);
-            updatedList = newList;
 
             if (i === 0) {
                 randomCard.isDown = true;
             }
+
+            updatedList = newList;
 
             setDealerHand(prevHand => [...prevHand, randomCard]);
         }
@@ -105,19 +106,39 @@ const GameActionsContainer = ({setIsGameStarted, setValueOwn, betValue} : GameAc
     };
 
     const handleStandOption = () => {
-        if (sumPlayerHand < sumDealerHand) {
+        const updatedDealerHand = dealerHand.map(card => ({ ...card, isDown: false }))
+        const updateSumDealerHand = calculateDealerHandSum(updatedDealerHand, true)
+        setDealerHand(prevHand => prevHand.map(card => ({ ...card, isDown: false })))
+
+        if (sumPlayerHand < updateSumDealerHand) {
             setIsGameLost(true);
             setValueOwn((prevValue: number) => prevValue - betValue);
             return
         }
 
-        if (sumPlayerHand > sumDealerHand) {
+        if (sumPlayerHand > updateSumDealerHand) {
             setIsGameWon(true);
             setValueOwn((prevValue: number) => prevValue + betValue);
             return
         }
 
         setIsGameDraw(true);
+    }
+
+    const handleResetGame = () => {
+        resetStates();
+        setIsGameStarted(false);
+    }
+
+    const resetStates = () => {
+        setDealerHand([]);
+        setPlayerHand([]);
+        setSumPlayerHand(0);
+        setSumDealerHand(0);
+        setIsGameLost(false);
+        setIsGameWon(false);
+        setIsGameDraw(false);
+        setDeckList(deck);
     }
 
     const getResultText = isGameWon ? "Você ganhou essa rodada!" : isGameLost ? "Você perdeu essa rodada!" : "Você empatou essa rodada!";
@@ -164,7 +185,7 @@ const GameActionsContainer = ({setIsGameStarted, setValueOwn, betValue} : GameAc
             {(isGameLost || isGameWon || isGameDraw) &&
                 <>
                     <h2 className={styles.resultText}>{getResultText}</h2>
-                    <Button label={"Voltar as apostas"} onClick={() => setIsGameStarted(false)}/>
+                    <Button label={"Voltar as apostas"} onClick={() => handleResetGame()}/>
                 </>
             }
             {isMobile && <IconTooltip />}
