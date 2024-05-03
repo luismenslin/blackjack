@@ -6,6 +6,7 @@ import deck from "../deck.json"
 import {cardProps} from "../Card/Card";
 import IconTooltip from "../IconTooltip";
 import {AppContext} from "../../context/AppContext";
+import React  from 'react';
 
 interface GameActionsContainerProps {
     setIsGameStarted: (isGameStarted: boolean) => void
@@ -39,9 +40,8 @@ const GameActionsContainer = ({setIsGameStarted, setValueOwn, betValue} : GameAc
         for (let i = 0; i < 2; i++) {
             const { randomCard, updatedList: newList } = getRandomCardAndUpdateDeckList(updatedList);
 
-            if (i === 0) {
-                randomCard.isDown = true;
-            }
+            if (randomCard.isDown) randomCard.isDown = false;
+            if (i === 0) randomCard.isDown = true;
 
             updatedList = newList;
 
@@ -54,7 +54,7 @@ const GameActionsContainer = ({setIsGameStarted, setValueOwn, betValue} : GameAc
             setPlayerHand(prevHand => [...prevHand, randomCard]);
         }
 
-        setDeckList(() => updatedList);
+        setDeckList(updatedList);
     }, []);
 
     useEffect(() => {
@@ -66,6 +66,7 @@ const GameActionsContainer = ({setIsGameStarted, setValueOwn, betValue} : GameAc
         if (sumPlayerHand > 21) {
             setIsGameLost(true)
             setValueOwn((prevValue: number) => prevValue - betValue);
+            setDealerHand(prevHand => prevHand.map(card => ({ ...card, isDown: false })));
         }
     }, [sumPlayerHand]);
 
@@ -95,7 +96,7 @@ const GameActionsContainer = ({setIsGameStarted, setValueOwn, betValue} : GameAc
         return sum;
     };
 
-    const calculateDealerHandSum = (hand: cardProps[], considerIsDown: boolean = false): number => {
+    const calculateDealerHandSum = (hand: cardProps[]): number => {
         let sum = 0;
         for (const card of hand) {
             if (!card.isDown) {
@@ -106,9 +107,8 @@ const GameActionsContainer = ({setIsGameStarted, setValueOwn, betValue} : GameAc
     };
 
     const handleStandOption = () => {
-        const updatedDealerHand = dealerHand.map(card => ({ ...card, isDown: false }))
-        const updateSumDealerHand = calculateDealerHandSum(updatedDealerHand, true)
-        setDealerHand(prevHand => prevHand.map(card => ({ ...card, isDown: false })))
+        setDealerHand(prevHand => prevHand.map(card => ({ ...card, isDown: false })));
+        const updateSumDealerHand = calculateDealerHandSum(dealerHand.map(card => ({ ...card, isDown: false })));
 
         if (sumPlayerHand < updateSumDealerHand) {
             setIsGameLost(true);
@@ -150,9 +150,9 @@ const GameActionsContainer = ({setIsGameStarted, setValueOwn, betValue} : GameAc
             </div>
 
             <div className={styles.handDeck}>
-                {dealerHand.map((cardData, index) => (
+                {dealerHand.map((cardData) => (
                     <Card
-                        key={index}
+                        key={cardData.suit + cardData.number}
                         suit={cardData.suit}
                         number={cardData.number}
                         color={cardData.color}
