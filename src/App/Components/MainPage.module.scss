@@ -43,6 +43,6 @@ body {
   background-color: #C2CECD;
 
   @include respond(phone) {
-    margin: 1rem;
+    margin: 0;
   }
 }
