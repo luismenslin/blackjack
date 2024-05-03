@@ -10,7 +10,8 @@
   font-weight: 400;
   font-style: normal;
   font-size: 30px;
-  margin: 0;
+  margin: 1rem;
+  text-shadow: 0px 10px 10px rgba(0, 0, 0, 0.5);
 
   @include respond(phone) {
     font-size: 24px;
@@ -25,9 +26,9 @@
 
 .text {
   font-family: "Athiti", sans-serif;
-  font-weight: 400;
+  font-weight: 500;
   font-style: normal;
-  font-size: 15px;
+  font-size: 18px;
   text-align: center;
 
   @include respond(phone) {
@@ -66,11 +67,15 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 15%;
+  width: 20%;
   padding: 20px;
 
   @include respond(phone) {
     width: unset;
     padding: 12px;
   }
+}
+
+.bold {
+  font-weight: bold;
 }

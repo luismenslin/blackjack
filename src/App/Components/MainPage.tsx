@@ -9,6 +9,7 @@ const MainPage = () => {
   const [valueOwn, setValueOwn] = useState(1000)
   const [betValue, setBetValue] = useState(0)
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 600);
+  const [isGameFinished, setIsGameFinished] = useState(false)
 
   useEffect(() => {
     const handleResize = () => {
@@ -26,11 +27,17 @@ const MainPage = () => {
     if (!isGameStarted) setBetValue(0)
   }, [isGameStarted]);
 
+  useEffect(() => {
+    if (valueOwn === 0) {
+      setIsGameFinished(true)
+    }
+  }, [valueOwn]);
+
   return (
       <AppContext.Provider value={{ isMobile }}>
         {!isGameStarted &&
             <div>
-              <GameNotStarted setIsGameStarted={setIsGameStarted} valueOwn={valueOwn} betValue={betValue} setBetValue={setBetValue} />
+              <GameNotStarted setIsGameStarted={setIsGameStarted} valueOwn={valueOwn} betValue={betValue} setBetValue={setBetValue}  setIsGameFinished={setIsGameFinished} isGameFinished={isGameFinished} setValueOwn={setValueOwn}/>
             </div>
         }
         {isGameStarted &&
