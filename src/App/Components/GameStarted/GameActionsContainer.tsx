@@ -8,6 +8,10 @@ import IconTooltip from "../IconTooltip";
 import {AppContext} from "../../context/AppContext";
 import React  from 'react';
 
+type PercentageDealerHitMap = {
+    [sum: number]: number;
+}
+
 interface GameActionsContainerProps {
     setIsGameStarted: (isGameStarted: boolean) => void
     setValueOwn: (valueOwn: (prevValue: number) => number) => void
@@ -83,12 +87,10 @@ const GameActionsContainer = ({setIsGameStarted, setValueOwn, betValue} : GameAc
         setDeckList(() => updatedList);
     }
 
-    const buyDealerCard = () => {
-        const { randomCard, updatedList } = getRandomCardAndUpdateDeckList(deckList);
-        const newDealerHand = [...dealerHand, randomCard];
-        setDealerHand(newDealerHand);
-        setDeckList(() => updatedList);
-        return newDealerHand;
+    const buyDealerCard = (currentDealerHand: cardProps[], currentDeckList: cardProps[]) => {
+        const { randomCard, updatedList } = getRandomCardAndUpdateDeckList(currentDeckList);
+        const newDealerHand = [...currentDealerHand, randomCard];
+        return { newDealerHand, updatedList };
     }
 
     const convertCardNumberToValue = (number: string): number => {
@@ -111,10 +113,14 @@ const GameActionsContainer = ({setIsGameStarted, setValueOwn, betValue} : GameAc
         return sum;
     };
 
-    const calculateDealerHandSum = (hand: cardProps[]): number => {
+    const calculateDealerHandSum = (hand: cardProps[], considerDownCard: boolean = false): number => {
         let sum = 0;
         for (const card of hand) {
             if (!card.isDown) {
+                sum += convertCardNumberToValue(card.number);
+            }
+
+            if (considerDownCard && card.isDown) {
                 sum += convertCardNumberToValue(card.number);
             }
         }
@@ -123,65 +129,54 @@ const GameActionsContainer = ({setIsGameStarted, setValueOwn, betValue} : GameAc
 
     const handleDealerCardsBuy = (sumFullDealerHand: number) => {
         let willDealerHit = true;
+        let updatedDealerHand = dealerHand;
+        let currentDeckList = deckList;
+
+        const percDealerHitMap: PercentageDealerHitMap = {
+            12: 90,
+            13: 70,
+            14: 50,
+            15: 40,
+            16: 30,
+            17: 15,
+            18: 10,
+            19: 5,
+            20: 2,
+            21: 0
+        };
+
         while (willDealerHit) {
             const chance = Math.floor(Math.random() * 101)
-            let percDealerHit = 0;
-
-            switch (sumFullDealerHand) {
-                case 12:
-                    percDealerHit = 90;
-                    break
-                case 13:
-                    percDealerHit = 70;
-                    break
-                case 14:
-                    percDealerHit = 50;
-                    break
-                case 15:
-                    percDealerHit = 40;
-                    break
-                case 16:
-                    percDealerHit = 30;
-                    break
-                case 17:
-                    percDealerHit = 15;
-                    break
-                case 18:
-                    percDealerHit = 10;
-                    break
-                case 19:
-                    percDealerHit = 5;
-                    break
-                case 20:
-                    percDealerHit = 2;
-                    break
-                case 21:
-                    percDealerHit = 0;
-                    break
-                default:
-                    if (sumFullDealerHand <= 11) {
-                        percDealerHit = 100;
-                    }
-                    if (sumFullDealerHand > 21) {
-                        percDealerHit = 0;
-                    }
+            if (sumFullDealerHand > 21) {
+                willDealerHit = false;
+                break;
             }
 
+            const percDealerHit = (sumFullDealerHand <= 11) ? 100 : percDealerHitMap[sumFullDealerHand];
+
             if (chance <= percDealerHit) {
-                const newDealerHand = buyDealerCard();
-                sumFullDealerHand = calculateDealerHandSum(newDealerHand);
+                const { newDealerHand, updatedList } = buyDealerCard(updatedDealerHand, currentDeckList);
+                currentDeckList = updatedList;
+                updatedDealerHand = newDealerHand;
+                sumFullDealerHand = calculateDealerHandSum(newDealerHand, true);
             } else {
                 willDealerHit = false;
             }
         }
 
-        return sumFullDealerHand
+        const finalDealerHand = updatedDealerHand.map(card => ({ ...card, isDown: false }));
+
+        return { finalDealerHand, currentDeckList, sumFullDealerHand };
     }
 
     const handleStandOption = () => {
         const fullDealerHand = dealerHand.map(card => ({ ...card, isDown: false }));
-        let sumFullDealerHand = calculateDealerHandSum(fullDealerHand);
-        sumFullDealerHand = handleDealerCardsBuy(sumFullDealerHand);
+        const sumInitialDealerHand = calculateDealerHandSum(fullDealerHand);
+        const { finalDealerHand, currentDeckList, sumFullDealerHand } = handleDealerCardsBuy(sumInitialDealerHand);
+
+        setDealerHand(finalDealerHand);
+        setDeckList(currentDeckList);
+        setSumDealerHand(sumFullDealerHand);
 
         if (sumPlayerHand < sumFullDealerHand && sumFullDealerHand <= 21) {
             setIsGameLost(true);
@@ -195,9 +190,7 @@ const GameActionsContainer = ({setIsGameStarted, setValueOwn, betValue} : GameAc
             return
         }
 
-        setSumDealerHand(sumFullDealerHand)
         setIsGameDraw(true);
-        setDealerHand(fullDealerHand);
     }
 
     const handleResetGame = () => {
