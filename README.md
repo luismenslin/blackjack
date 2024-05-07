@@ -23,7 +23,7 @@ O objetivo do blackjack é vencer o dealer obtendo uma mão que seja mais próxi
 ### Valor das Cartas
   - As cartas numéricas (2 a 10) valem seu valor nominal.
   - As cartas de figura (Valete, Dama, Rei) valem 10 pontos cada.
-  - O Ás valem 11 pontos cada.
+  - O Ás vale 01 ponto ou 11 pontos (Dependendo da soma do valor das cartas na mão do player)
 
 ### Jogo em ação!
   - Pré Jogo: O player recebe R$1000,00 para apostar no jogo, ele deve escolher a quantia que deseja apostar na primeira rodada, e a cada rodada subsequente deverá fazer a sua escolha de aposta.
