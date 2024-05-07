@@ -82,6 +82,29 @@ const GameActionsContainer = ({setIsGameStarted, setValueOwn, betValue} : GameAc
         }
     }, [sumDealerHand]);
 
+    useEffect(() => {
+        const calculateHandSum = (hand: cardProps[]): number => {
+            let sum = 0;
+            for (const card of hand) {
+                if (['J', 'Q', 'K'].includes(card.number)) {
+                    sum += 10;
+                } else if (card.number === 'A') {
+                    if (sum + 11 <= 21) {
+                        sum += 11;
+                    } else {
+                        sum += 1;
+                    }
+                } else {
+                    sum += parseInt(card.number);
+                }
+            }
+            return sum;
+        };
+
+        setSumPlayerHand(calculateHandSum(playerHand));
+        setSumDealerHand(calculateHandSum(dealerHand));
+    }, [playerHand, dealerHand]);
+
     const handleBuyCardClick = () => {
         const { randomCard, updatedList } = getRandomCardAndUpdateDeckList(deckList);
         setPlayerHand(prevHand => [...prevHand, randomCard]);
