@@ -258,7 +258,7 @@ const GameActionsContainer = ({setIsGameStarted, setValueOwn, betValue} : GameAc
     return (
         <div className={styles.container}>
             <div>
-                <h1 className={styles.title}>Mão do Dealer ({sumDealerHand})</h1>
+                <h1 className={styles.title}>Mão do Dealer ({getDealerHandSumDesconsideringFacedDownCards()})</h1>
             </div>
 
             <div className={cx(styles.handDeck, { [styles.cardsOverflow]: (dealerHand.length >= 3 && isMobile) })}>
