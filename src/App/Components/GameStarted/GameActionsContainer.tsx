@@ -7,6 +7,7 @@ import {cardProps} from "../Card/Card";
 import IconTooltip from "../IconTooltip";
 import {AppContext} from "../../context/AppContext";
 import React  from 'react';
+import cx from "classnames";
 
 type PercentageDealerHitMap = {
     [sum: number]: number;
@@ -217,7 +218,7 @@ const GameActionsContainer = ({setIsGameStarted, setValueOwn, betValue} : GameAc
                 <h1 className={styles.title}>Mão do Dealer ({sumDealerHand})</h1>
             </div>
 
-            <div className={styles.handDeck}>
+            <div className={cx(styles.handDeck, { [styles.cardsOverflow]: (dealerHand.length >= 3 && isMobile) })}>
                 {dealerHand.map((cardData) => (
                     <Card
                         key={cardData.suit + cardData.number}
@@ -225,6 +226,7 @@ const GameActionsContainer = ({setIsGameStarted, setValueOwn, betValue} : GameAc
                         number={cardData.number}
                         color={cardData.color}
                         isDown={cardData.isDown}
+                        handSize={dealerHand.length}
                     />
                 ))}
             </div>
@@ -233,13 +235,14 @@ const GameActionsContainer = ({setIsGameStarted, setValueOwn, betValue} : GameAc
                 <h1 className={styles.title}>Sua mão ({sumPlayerHand})</h1>
             </div>
 
-            <div className={styles.handDeck}>
+            <div className={cx(styles.handDeck, { [styles.cardsOverflow]: (playerHand.length >= 3 && isMobile) })}>
                 {playerHand.map((cardData, index) => (
                     <Card
                         key={index}
                         suit={cardData.suit}
                         number={cardData.number}
                         color={cardData.color}
+                        handSize={playerHand.length}
                     />
                 ))}
             </div>
