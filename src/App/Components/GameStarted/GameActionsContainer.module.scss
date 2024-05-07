@@ -27,6 +27,10 @@
 
 .handDeck {
   display: flex;
+
+  &.cardsOverflow {
+    margin-left: 18vw;
+  }
 }
 
 .resultText {
