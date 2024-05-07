@@ -235,6 +235,26 @@ const GameActionsContainer = ({setIsGameStarted, setValueOwn, betValue} : GameAc
 
     const getResultText = isGameWon ? "Você ganhou essa rodada!" : isGameLost ? "Você perdeu essa rodada!" : "Você empatou essa rodada!";
 
+    const getDealerHandSumDesconsideringFacedDownCards = (): number => {
+        let sum = 0;
+        for (const card of dealerHand) {
+            if (!card.isDown) {
+                if (['J', 'Q', 'K'].includes(card.number)) {
+                    sum += 10;
+                } else if (card.number === 'A') {
+                    if (sum + 11 <= 21) {
+                        sum += 11;
+                    } else {
+                        sum += 1;
+                    }
+                } else {
+                    sum += parseInt(card.number);
+                }
+            }
+        }
+        return sum;
+    }
+
     return (
         <div className={styles.container}>
             <div>
